@@ -28,12 +28,16 @@ public class OperationLogServiceDummyImpl implements OperationLogService {
 	 * @param rangeOfDate 日期長度(從2015-01-01開始算)
 	 */
 	private List<OperationLogEntity> generate(int rangeOfDate) {
-		List<LocalTime> shift = Arrays.asList(LocalTime.of(5, 45), LocalTime.of(14, 45), LocalTime.of(23, 45));
-		
 		List<OperationLogEntity> result = Lists.newArrayList();
+		
+		// 班表, 每一班的起始時間
+		List<LocalTime> shift = Arrays.asList(LocalTime.of(5, 45), LocalTime.of(14, 45), LocalTime.of(23, 45));
+		// 將Machine表列
 		Machine[] machines = Machine.values();
+		// 起始時間
 		LocalDate currentDate = LocalDate.parse("2015-01-01");
 		
+		// 每天, 每班, 每台機器定義最細粒度的資料
 		for (int date = 0; date < rangeOfDate; date++) {
 			for (int sheet = 0; sheet <= 2; sheet++) {
 				for (int machine = 0; machine < machines.length; machine++) {
@@ -46,6 +50,7 @@ public class OperationLogServiceDummyImpl implements OperationLogService {
 		return result;
 	}
 	
+	// 隨機產生數量, 範圍為10000~100000
 	private int randomCnt() {
 		final double min = 10000;
 		final double max = 100000;
@@ -54,6 +59,7 @@ public class OperationLogServiceDummyImpl implements OperationLogService {
 		return (int)(Math.random() * range + min);
 	}
 
+	@Override
 	public List<OperationLogEntity> getAll() {
 		return generate(1000);
 	}
