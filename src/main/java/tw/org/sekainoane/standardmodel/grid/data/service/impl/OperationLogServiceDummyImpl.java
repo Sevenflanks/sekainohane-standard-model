@@ -14,17 +14,27 @@ import tw.org.sekainoane.standardmodel.grid.data.entity.OperationLogEntity;
 import tw.org.sekainoane.standardmodel.grid.data.service.OperationLogService;
 import tw.org.sekainoane.standardmodel.grid.data.setting.Machine;
 
+/**
+ * 組出用以測試的假資料
+ * 
+ * @author RHYS
+ */
 @Service
-public class OperationLogServiceImpl implements OperationLogService {
+public class OperationLogServiceDummyImpl implements OperationLogService {
 	
-	private List<OperationLogEntity> generate() {
+
+	/**
+	 * 產生假資料
+	 * @param rangeOfDate 日期長度(從2015-01-01開始算)
+	 */
+	private List<OperationLogEntity> generate(int rangeOfDate) {
 		List<LocalTime> shift = Arrays.asList(LocalTime.of(5, 45), LocalTime.of(14, 45), LocalTime.of(23, 45));
 		
 		List<OperationLogEntity> result = Lists.newArrayList();
 		Machine[] machines = Machine.values();
 		LocalDate currentDate = LocalDate.parse("2015-01-01");
 		
-		for (int date = 0; date < 365; date++) {
+		for (int date = 0; date < rangeOfDate; date++) {
 			for (int sheet = 0; sheet <= 2; sheet++) {
 				for (int machine = 0; machine < machines.length; machine++) {
 					result.add(new OperationLogEntity(LocalDateTime.of(currentDate, shift.get(sheet)), machines[machine], randomCnt()));
@@ -45,7 +55,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 	}
 
 	public List<OperationLogEntity> getAll() {
-		return generate();
+		return generate(1000);
 	}
 	
 }

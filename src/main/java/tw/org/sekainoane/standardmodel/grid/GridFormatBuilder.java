@@ -8,6 +8,11 @@ import java.util.stream.Collectors;
 
 import tw.org.sekainoane.standardmodel.grid.data.entity.OperationLogEntity;
 
+/**
+ * Gird Builder, 規劃可以自訂縱橫座標的group方式以及內容值的顯示方式
+ * 目前還沒有能力實作出此功能, 暫時定義為無效
+ * @author RHYS
+ */
 @Deprecated
 public class GridFormatBuilder {
 	

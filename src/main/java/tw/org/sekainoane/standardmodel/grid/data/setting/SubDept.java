@@ -1,5 +1,9 @@
 package tw.org.sekainoane.standardmodel.grid.data.setting;
 
+/**
+ * 子部門, 上層為部門
+ * @author RHYS
+ */
 public enum SubDept {
 	
 	PT(Dept.PT),

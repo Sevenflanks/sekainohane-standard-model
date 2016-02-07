@@ -16,6 +16,11 @@ import tw.org.sekainoane.standardmodel.grid.data.entity.OperationLogEntity;
 import tw.org.sekainoane.standardmodel.grid.data.service.OperationLogService;
 import tw.org.sekainoane.standardmodel.util.DateTimeUtil;
 
+/**
+ * 實驗將一個細粒度的資料組成粗粒度的Grid
+ * 並且能夠自訂縱橫座標的Group方式, 以及Sort方式
+ * @author RHYS
+ */
 public class GridFormatTest extends GenericTest {
 
 	@Autowired
@@ -30,11 +35,11 @@ public class GridFormatTest extends GenericTest {
 	
 	@Test
 	public void test() {
-		showGridInConsole(DateTimeUtil.byHalfYear, byDept);
+		showGridInConsole(DateTimeUtil.byWeek, byDept, byKeyLength.thenComparing(byKey));
 	}
 
 	private void showGridInConsole(final Function<OperationLogEntity, String> verticalGrouping,
-			final Function<OperationLogEntity, Object> horizonGrouping) {
+			final Function<OperationLogEntity, Object> horizonGrouping, Comparator<Entry<String, Map<Object,Optional<OperationLogEntity>>>> listSorting) {
 		List<OperationLogEntity> sources = operationLogService.getAll();
 		
 		Map<String, Map<Object, Optional<OperationLogEntity>>> result = sources.stream()
@@ -45,7 +50,7 @@ public class GridFormatTest extends GenericTest {
 		
 		
 		Comparator.comparing(o -> o.toString().length()).thenComparing(o -> o.toString());
-		result.entrySet().stream().sorted(byKeyLength.thenComparing(byKey))
+		result.entrySet().stream().sorted(listSorting)
 			.forEach(e -> {
 				StringBuilder sb = new StringBuilder();
 				sb.append(e.getKey()).append("\t");

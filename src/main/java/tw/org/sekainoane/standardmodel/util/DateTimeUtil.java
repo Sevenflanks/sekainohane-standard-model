@@ -12,10 +12,16 @@ import java.util.function.Function;
 
 import tw.org.sekainoane.standardmodel.grid.data.entity.OperationLogEntity;
 
+/**
+ * 日期Util
+ * @author RHYS
+ */
 public class DateTimeUtil {
 
+	/** 將日期轉換成年 */
 	public static final Function<OperationLogEntity, String> byYear = o -> "" + o.getDate().getYear();// LocalDateTime.of(o.getDate().getYear(), 1, 1, 1, 1);
 	
+	/** 將日期轉換成半年 */
 	public static final Function<OperationLogEntity, String> byHalfYear = o -> {
 		int month = o.getDate().getMonthValue();
 		if (month >= 1 && month < 7) {
@@ -27,6 +33,7 @@ public class DateTimeUtil {
 		}
 	};
 	
+	/** 將日期轉換成季 */
 	public static final Function<OperationLogEntity, String> bySeason = o -> {
 		int month = o.getDate().getMonthValue();
 		if (month >= 1 && month < 4) {
@@ -44,17 +51,21 @@ public class DateTimeUtil {
 		}
 	};
 	
+	/** 將日期轉換成月 */
 	public static final Function<OperationLogEntity, String> byMonth = o -> "" + o.getDate().getYear() + " " + o.getDate().getMonth().getDisplayName(TextStyle.SHORT, Locale.US); // LocalDateTime.of(o.getDate().getYear(), o.getDate().getMonthValue(), 1, 1, 1);
 	
 	private static final WeekFields weekFields = WeekFields.ISO;
+	/** 將日期轉換成週 */
 	public static final Function<OperationLogEntity, String> byWeek = o -> {
 //		LocalDateTime dayOfYearWeek = o.getDate().with(weekFields.dayOfWeek(), 1);
 //		return LocalDateTime.of(dayOfYearWeek.getYear(), dayOfYearWeek.getMonthValue(), dayOfYearWeek.getDayOfMonth(), 1, 1);
 		return o.getDate().getYear() + "-" + o.getDate().get(weekFields.weekOfWeekBasedYear());
 	};
 	
+	/** 將日期轉換成日 */
 	public static final Function<OperationLogEntity, String> byDate = o -> LocalDateTime.of(o.getDate().getYear(), o.getDate().getMonthValue(), o.getDate().getDayOfMonth(), 1, 1).format(DateTimeFormatter.ISO_DATE);
 
+	/** 將日期轉換成班 */
 	public static final Function<OperationLogEntity, String> bySheet = o -> {
 		List<LocalTime> sheet = Arrays.asList(LocalTime.of(5, 45), LocalTime.of(14, 45), LocalTime.of(23, 45));
 		

@@ -1,5 +1,9 @@
 package tw.org.sekainoane.standardmodel.grid.data.setting;
 
+/**
+ * 機器, 上層為子部門
+ * @author RHYS
+ */
 public enum Machine {
 
 	PT02(SubDept.PT),
