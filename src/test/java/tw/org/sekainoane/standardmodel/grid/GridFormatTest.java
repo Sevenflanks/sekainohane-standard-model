@@ -1,10 +1,9 @@
 package tw.org.sekainoane.standardmodel.grid;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,32 +25,37 @@ public class GridFormatTest extends GenericTest {
 	private final Function<OperationLogEntity, Object> bySubDept = o -> o.getMachine().getSubDept();
 	private final Function<OperationLogEntity, Object> byDept = o -> o.getMachine().getSubDept().getDept();
 	
+	private final Comparator<Entry<String, Map<Object,Optional<OperationLogEntity>>>> byKeyLength = Comparator.comparing(e -> e.getKey().length());
+	private final Comparator<Entry<String, Map<Object,Optional<OperationLogEntity>>>> byKey = Comparator.comparing(e -> e.getKey());
+	
 	@Test
 	public void test() {
-		showGridInConsole(DateTimeUtil.byWeek, bySubDept);
+		showGridInConsole(DateTimeUtil.byHalfYear, byDept);
 	}
 
-	private void showGridInConsole(final Function<OperationLogEntity, LocalDateTime> verticalGrouping,
+	private void showGridInConsole(final Function<OperationLogEntity, String> verticalGrouping,
 			final Function<OperationLogEntity, Object> horizonGrouping) {
 		List<OperationLogEntity> sources = operationLogService.getAll();
 		
-		Map<LocalDateTime, Map<Object, Optional<OperationLogEntity>>> result = sources.stream()
+		Map<String, Map<Object, Optional<OperationLogEntity>>> result = sources.stream()
 			.collect(Collectors.groupingBy(verticalGrouping, Collectors.groupingBy(horizonGrouping, Collectors.reducing((o1,o2) -> {
 				o1.setCnt(o1.getCnt() + o2.getCnt());
 				return o1;
 			}))));
 		
-		result.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey()))
-		.forEach(e -> {
-			StringBuilder sb = new StringBuilder();
-			sb.append(e.getKey().format(DateTimeFormatter.ISO_DATE_TIME)).append("\t");
-			
-			e.getValue().forEach((group, log) -> {
-				sb.append("[").append(group).append("]").append(":").append(log.map(o -> o.getCnt()).orElse(0)).append("\t");
+		
+		Comparator.comparing(o -> o.toString().length()).thenComparing(o -> o.toString());
+		result.entrySet().stream().sorted(byKeyLength.thenComparing(byKey))
+			.forEach(e -> {
+				StringBuilder sb = new StringBuilder();
+				sb.append(e.getKey()).append("\t");
+				
+				e.getValue().forEach((group, log) -> {
+					sb.append("[").append(group).append("]").append(":").append(log.map(o -> o.getCnt()).orElse(0)).append("\t");
+				});
+				
+				System.out.println(sb.toString());
 			});
-			
-			System.out.println(sb.toString());
-		});
 	}
 	
 }
