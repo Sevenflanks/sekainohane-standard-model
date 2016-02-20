@@ -35,7 +35,7 @@ public class GridFormatTest extends GenericTest {
 	
 	@Test
 	public void test() {
-		showGridInConsole(DateTimeUtil.byWeek, byDept, byKeyLength.thenComparing(byKey));
+		showGridInConsole(DateTimeUtil.bySeason, byMachine, byKeyLength.thenComparing(byKey));
 	}
 
 	private void showGridInConsole(final Function<OperationLogEntity, String> verticalGrouping,

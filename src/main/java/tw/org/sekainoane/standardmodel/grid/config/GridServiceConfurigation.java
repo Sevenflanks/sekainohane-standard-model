@@ -14,6 +14,6 @@ import org.springframework.stereotype.Service;
 @Configuration
 @Lazy
 @ComponentScan(basePackages = {"tw.org.sekainoane.standardmodel.grid.**.service"}, useDefaultFilters = false, includeFilters = {@ComponentScan.Filter(value = Service.class, type = FilterType.ANNOTATION)})
-public class GridConfurigation {
+public class GridServiceConfurigation {
 
 }

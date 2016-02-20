@@ -4,7 +4,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import tw.org.sekainoane.standardmodel.grid.config.GridConfurigation;
+import tw.org.sekainoane.standardmodel.grid.config.GridServiceConfurigation;
+import tw.org.sekainoane.standardmodel.travel.config.TravelDaoConfurigation;
+import tw.org.sekainoane.standardmodel.travel.config.TravelServiceConfurigation;
 
 /**
  * TEST若使用了Spring所管理的Bean
@@ -12,7 +14,7 @@ import tw.org.sekainoane.standardmodel.grid.config.GridConfurigation;
  * @author RHYS
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {GridConfurigation.class})
+@ContextConfiguration(classes = {GridServiceConfurigation.class, TravelServiceConfurigation.class, TravelDaoConfurigation.class})
 public class GenericTest {
 
 }
