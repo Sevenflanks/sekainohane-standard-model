@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
  * 掃過service package下的所有@Service
  * @author RHYS
  */
-@Configuration
-@Lazy
-@ComponentScan(basePackages = {"tw.org.sekainoane.standardmodel.travel.**.service"}, useDefaultFilters = false, includeFilters = {@ComponentScan.Filter(value = Service.class, type = FilterType.ANNOTATION)})
+//@Configuration
+//@Lazy
+//@ComponentScan(basePackages = {"tw.org.sekainoane.standardmodel.travel.**.service"}, useDefaultFilters = false, includeFilters = {@ComponentScan.Filter(value = Service.class, type = FilterType.ANNOTATION)})
 public class TravelServiceConfurigation {
 
 }
